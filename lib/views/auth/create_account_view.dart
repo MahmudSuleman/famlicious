@@ -32,6 +32,13 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Create Account',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+      ),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -144,7 +151,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     )
                   : TextButton(
                       style:
-                          TextButton.styleFrom(backgroundColor: Colors.black),
+                          TextButton.styleFrom(backgroundColor: Colors.green),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           String name = _nameController.text;

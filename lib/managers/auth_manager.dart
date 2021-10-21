@@ -69,4 +69,38 @@ class AuthManager with ChangeNotifier {
       return false;
     });
   }
+
+  Future<bool> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    return _fireBaseAuth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((userCredential) {
+      return userCredential.user != null;
+    }).catchError((error) {
+      setMessage('An error occurred!');
+      print(error);
+      print(StackTrace.current);
+      return false;
+    }).timeout(Duration(seconds: 60), onTimeout: () {
+      setMessage('Request timed out!');
+
+      return false;
+    });
+  }
+
+  Future<bool> sendResetLink(String email) async {
+    return _fireBaseAuth.sendPasswordResetEmail(email: email).then((_) {
+      print('Link sent');
+      return true;
+    }).catchError((error) {
+      setMessage('Couldn\'t send link');
+      print(StackTrace.current);
+      return false;
+    }).timeout(Duration(seconds: 60), onTimeout: () {
+      setMessage('Request timed out');
+      return false;
+    });
+  }
 }
